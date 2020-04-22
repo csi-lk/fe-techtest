@@ -11,6 +11,14 @@ const createButtons = range =>
     return button
   })
 
+const buttonsAreHighlighted = (buttons, shouldAdd) => {
+  buttons.forEach(buttonNumber => {
+    const buttonClassList = document.querySelectorAll('button')[buttonNumber - 1].classList
+    if (shouldAdd) return buttonClassList.add('highlight')
+    return buttonClassList.remove('highlight')
+  })
+}
+
 const app = () => {
   const main = document.querySelector('main')
   main.append(...createButtons(CONFIG.RANGE))
@@ -18,16 +26,15 @@ const app = () => {
   let currentlySelectedRange = []
   main.addEventListener('click', event => {
     const targetedNumber = Number.parseInt(event.target.dataset.number, 10)
-    currentlySelectedRange.forEach(buttonNumber => {
-      document.querySelectorAll('button')[buttonNumber - 1].classList.remove('highlight')
-    })
+    if (!targetedNumber) return
+    buttonsAreHighlighted(currentlySelectedRange, false)
     if (currentlySelectedNumber !== targetedNumber) {
       currentlySelectedRange = divisibleByWithinRange(targetedNumber, CONFIG.RANGE)
-      currentlySelectedRange.forEach(buttonNumber => {
-        document.querySelectorAll('button')[buttonNumber - 1].classList.add('highlight')
-      })
+      buttonsAreHighlighted(currentlySelectedRange, true)
+      currentlySelectedNumber = targetedNumber
+    } else {
+      currentlySelectedNumber = null
     }
-    currentlySelectedNumber = targetedNumber
   })
 }
 
