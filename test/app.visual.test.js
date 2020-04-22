@@ -4,7 +4,7 @@ import app from '../src/app'
 import * as config from '../src/config'
 
 describe('visual regression', () => {
-  it.each([368, 768, 1024, 1270])('Renders at %s width', async width => {
+  it.skip.each([368, 768, 1024, 1270])('Renders at %s width', async width => {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
     page.setViewport({ width, height: 768 })
