@@ -2,6 +2,8 @@ body {
   color: red;
 }
 
-.highlight {
-  background-color: yellow;
+main {
+  .highlight {
+    background-color: yellow;
+  }
 }

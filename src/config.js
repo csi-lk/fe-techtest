@@ -1,4 +1,4 @@
-const config = {
+module.exports = {
   RANGE: 144,
   ITEMS_PER_ROW: {
     MOBILE: 1,
@@ -6,5 +6,3 @@ const config = {
     DESKTOP: 3,
   },
 }
-
-export default config
