@@ -33,11 +33,13 @@ describe('app', () => {
       ({ number, highlighted }) => {
         const wrapper = setupWrapper()
         app()
-        wrapper.querySelectorAll('main button')[number].click()
+        wrapper.querySelectorAll('button')[number - 1].click()
         highlighted.forEach(highlightedNumber => {
-          expect(wrapper.querySelectorAll('main button')[highlightedNumber]).toHaveClass(
-            'highlighted',
-          )
+          expect(
+            wrapper
+              .querySelectorAll('button')
+              [highlightedNumber - 1].classList.contains('highlight'),
+          ).toBeTruthy()
         })
       },
     )
@@ -45,9 +47,11 @@ describe('app', () => {
       const wrapper = setupWrapper()
       app()
       wrapper.querySelectorAll('main button')[101].click()
-      expect(wrapper.querySelectorAll('main button')[1]).toHaveClass('highlighted')
+      expect(
+        wrapper.querySelectorAll('main button')[1].classList.contains('highlight'),
+      ).toBeTruthy()
       wrapper.querySelectorAll('main button')[101].click()
-      expect(wrapper.querySelectorAll('main button')[1]).notToHaveClass('highlighted')
+      expect(wrapper.querySelectorAll('main button')[1].classList.contains('highlight')).toBeFalsy()
     })
   })
 })
