@@ -26,9 +26,8 @@ const app = () => {
       currentlySelectedRange.forEach(buttonNumber => {
         document.querySelectorAll('button')[buttonNumber - 1].classList.add('highlight')
       })
-    } else {
-      currentlySelectedNumber = targetedNumber
     }
+    currentlySelectedNumber = targetedNumber
   })
 }
 
