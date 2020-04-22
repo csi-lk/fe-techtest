@@ -1,26 +1,25 @@
-import puppeteer from 'puppeteer'
-
 import app from '../src/app'
 import * as config from '../src/config'
 
+const setupWrapper = () => {
+  const wrapper = document.createElement('main')
+  document.querySelector('body').append(wrapper)
+  return wrapper
+}
+
 describe('app', () => {
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
   describe('render', () => {
     it.each([72, 144, 300])('Should generate %s buttons on the page', range => {
       config.default = {
         ...config.default,
         RANGE: range,
       }
-      const wrapper = document.createElement('main')
+      const wrapper = setupWrapper()
       app()
-      expect(wrapper.querySelector('main div')).toHaveLength(range)
-    })
-    it.each([368, 768, 1024, 1270])('Renders at %s width', async width => {
-      const browser = await puppeteer.launch()
-      const page = await browser.newPage()
-      page.setViewport({ width, height: 768 })
-      await page.goto('http://localhost:8080')
-      const image = await page.screenshot()
-      expect(image).toMatchImageSnapshot()
+      expect(wrapper.querySelectorAll('button')).toHaveLength(range)
     })
   })
   describe('function', () => {
@@ -32,21 +31,23 @@ describe('app', () => {
     `(
       `When I click $number number it should highlight $highlighted numbers`,
       ({ number, highlighted }) => {
-        const wrapper = document.createElement('main')
+        const wrapper = setupWrapper()
         app()
-        wrapper.querySelector('main div')[number].simulate('click')
+        wrapper.querySelectorAll('main button')[number].click()
         highlighted.forEach(highlightedNumber => {
-          expect(wrapper.querySelector('main div')[highlightedNumber]).toHaveClass('highlighted')
+          expect(wrapper.querySelectorAll('main button')[highlightedNumber]).toHaveClass(
+            'highlighted',
+          )
         })
       },
     )
     it('should remove highlight when clicking on button again', () => {
-      const wrapper = document.createElement('main')
+      const wrapper = setupWrapper()
       app()
-      wrapper.querySelector('main div')[101].simulate('click')
-      expect(wrapper.querySelector('main div')[1]).toHaveClass('highlighted')
-      wrapper.querySelector('main div')[101].simulate('click')
-      expect(wrapper.querySelector('main div')[1]).notToHaveClass('highlighted')
+      wrapper.querySelectorAll('main button')[101].click()
+      expect(wrapper.querySelectorAll('main button')[1]).toHaveClass('highlighted')
+      wrapper.querySelectorAll('main button')[101].click()
+      expect(wrapper.querySelectorAll('main button')[1]).notToHaveClass('highlighted')
     })
   })
 })
