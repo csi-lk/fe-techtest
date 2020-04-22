@@ -23,6 +23,12 @@ Using jest
 yarn test
 ```
 
+Linting
+
+```
+yarn lint
+```
+
 ---
 
 Here's my braindump from when I forked the task, it will contain a lot of my notes to give you an idea of how I work / approach tasks etc.
@@ -74,6 +80,22 @@ Means if I run into a problem or a unexplained requirement I can get feedback up
   - `min-width: 1024px`
   - Max width container (desktop large)
   - `min-width: 1270px`
+
+## Final Notes
+
+Spent about 2.t hours total active time on it, it seems that I have hit all the requirements but missed some things from my initial plan, and as always it could be better 😉
+
+If I had more time i'd:
+
+- use typescript
+- get the visual regression tests working
+- randomize the integration tests with `faker`
+- generate the 144 buttons at build time rather than run time
+- do some more abstraction
+
+Oh I also copy+pasted a bit of config from my [webite repo](https://github.com/csi-lk/csi.lk) to speed up delivery
+
+Overall am happy with the readability and extensibility of what i've put together
 
 ## Resources
 
