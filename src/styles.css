@@ -3,7 +3,26 @@ body {
 }
 
 main {
-  .highlight {
-    background-color: yellow;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1024px;
+  margin: 0 auto;
+
+  button {
+    flex: 1 calc(100% / var(--items-per-row-mobile));
+    padding: 20px;
+    margin: var(--items-per-row-mobile);
+
+    @media (min-width: 768px) {
+      flex: 1 calc(100% / var(--items-per-row-tablet));
+    }
+
+    @media (min-width: 1024px) {
+      flex: 1 calc(100% / var(--items-per-row-desktop));
+    }
+
+    &.highlight {
+      background-color: yellow;
+    }
   }
 }
